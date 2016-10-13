@@ -1,0 +1,76 @@
+doctype html
+html(lang="ja" ng-app='divingApp')
+  head
+    title New diving log
+    include ../partials/head.jade
+  body
+    scritpt(type='text/javascript', src='/components/jquery/dist/jquery.min.js')
+    scritpt(type='text/javascript', src='/components/bootstrap/dist/js/bootstrap.min.js')
+    //script(type='text/javascript', src='/javascripts/grayscale.min.js')
+    //scritpt(type='text/javascript', src='/components/angular/angular.min.js')
+    //scritpt(type='text/javascript', src='/components/angular-toggle-switch/angular-toggle-switch.min.js')
+    script(type='text/javascript', src='/javascripts/angular.min.js')
+    //script(type='text/javascript', src='/javascripts/angular-toggle-switch.min.js')
+    script(type='text/javascript', src='/javascripts/core.js')
+    include ../partials/header.jade
+    div(ng-controller="logCtrl")
+
+      main.main
+
+      .row
+        .col-lg-12
+          .panel.panel-default
+            .panel-heading
+              | Add new log
+            .panel-body
+              .row
+                .col-lg-6
+                  form(role="form" name="newLogForm", ng-submit="saveLog(newLog)")
+                    .form-group
+                      label Dive No.
+                      input(type="number", ng-model="newLog.logNumber", name="logNumber", placeholder="logNumber")
+                    .form-group
+                      label Dive date
+                      input(type="date", ng-model="newLog.diveDate", name="diveDate", placeholder="diveDate")
+                    .form-group
+                      label Location
+                      input(type="number", ng-model="newLog.diveLocationId", name="diveLocationId", placeholder="diveLocationId")
+                    .form-group
+                      label Dive point
+                      input(type="text", ng-model="newLog.divePoint", name="divePoint", placeholder="divePoint")
+                    //.form-group
+                      label Water entry0
+                      input(type="text", ng-model="newLog.waterEntryKind0", name="waterEntryKind0", placeholder="waterEntryKind0")
+                    .from-group
+                      label Water entry kind
+                      select(id="waterEntryKind" name="waterEntryKind" ng-model="newLog.waterEntryKind")
+                        option(value="Beach" selected)
+                         | Beach
+                        option(value="Boat")
+                         | Boat
+
+                    .form-group
+                      input(type="submit")
+
+
+
+
+
+      div
+        {lastLog}
+
+
+      div testabc.list-group
+          a(href="#", class="list-group-item, list-group-item-action, list-group-item-success") Dapibus ac facilisis in
+
+
+      
+          
+
+  //    
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action list-group-item-success">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item list-group-item-action list-group-item-info">Cras sit amet nibh libero</a>
+        <a href="#" class="list-group-item list-group-item-action list-group-item-warning">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item list-group-item-action list-group-item-danger">Vestibulum at eros</a>
+      </div>

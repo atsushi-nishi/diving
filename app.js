@@ -5,8 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var config = require('config');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var logs = require('./routes/logs');
 
 var app = express();
 
@@ -22,8 +25,50 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//==== db section ====
+
+var mongoose = require('mongoose');
+var Schema   = mongoose.Schema;
+
+var mongoUri = "mongodb://" + config.db.master.user + ":" + config.db.master.password + "@" + config.db.master.host + "/diving_app";
+var mongoOptions = {
+    /*
+    user: config.db.master.user,
+    password: config.db.master.password,
+    */
+}
+
+console.log("mongoUri:", mongoUri);
+console.log("mongoOptions:", mongoOptions);
+mongoose.connect(mongoUri, mongoOptions);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("we're connected to mongodb!");
+})
+
+//========
+
+
 app.use('/', routes);
 app.use('/users', users);
+
+//app.use('/addLog', addLog);
+
+app.get('/logs', function(req, res) {
+    res.render('logs');
+});
+app.get('/logs/new', function(req, res) {
+    res.render('logs/new');
+});
+
+
+app.post('/api/logs', logs.create);
+app.get('/api/logs/index', logs.index);
+app.get('/api/logs/search', logs.search);
+app.get('/api/logs/:id', logs.show);
+  
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
